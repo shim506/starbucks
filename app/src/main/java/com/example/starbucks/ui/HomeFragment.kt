@@ -6,15 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.starbucks.R
 import com.example.starbucks.data.model.Product
 import com.example.starbucks.databinding.FragmentHomeBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private val adapter = ProductAdapter()
+    private val viewModel: HomeViewModel by viewModels<HomeViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,6 +28,8 @@ class HomeFragment : Fragment() {
 
         setRecyclerviewAdapter()
         setRecyclerviewDummyData()
+
+
 
         return binding.root
     }
@@ -54,6 +61,11 @@ class HomeFragment : Fragment() {
         binding.recyclerviewRecommend.adapter = adapter
         binding.recyclerviewRecommend.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.recommendFlow.collect {
+                adapter.submitList(it)
+            }
+        }
 
     }
 
