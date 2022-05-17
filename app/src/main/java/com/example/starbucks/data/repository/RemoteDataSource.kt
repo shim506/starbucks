@@ -5,12 +5,13 @@ import com.example.starbucks.data.model.Product
 import com.example.starbucks.network.MainApi
 import com.example.starbucks.network.NetworkResult
 import com.example.starbucks.network.StarbucksApi
+import com.example.starbucks.network.StarbucksApi.Companion.baseUrl
 import com.example.starbucks.network.dto.HomeInfoDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.lang.Exception
 
-class RemoteDataSource(private val mainApi: MainApi, val starbucksApi: StarbucksApi) : Repository {
+class RemoteDataSource(private val mainApi: MainApi, private val starbucksApi: StarbucksApi) :
+    Repository {
     override suspend fun getRecommends(): Flow<NetworkResult<Product>> {
         TODO("Not yet implemented")
     }
@@ -21,15 +22,46 @@ class RemoteDataSource(private val mainApi: MainApi, val starbucksApi: Starbucks
             val body = response.body()
 
             if (response.isSuccessful && body != null) {
-                Log.d("TAG", "sucess")
                 flow { emit(NetworkResult.Success(body)) }
             } else {
-                Log.d("TAG", "error")
                 flow { emit(NetworkResult.Error(response.code(), response.message())) }
             }
         } catch (e: Exception) {
             Log.d("TAG", e.toString())
             flow { emit(NetworkResult.Exception(e)) }
+        }
+    }
+
+    override suspend fun getRecommendImage(value: String): NetworkResult<String> {
+        val response = starbucksApi.getRecommendImage(value.toLong())
+        val body = response.body()
+        Log.d("Home" , response.isSuccessful.toString())
+        try {
+            if (response.isSuccessful) {
+                body?.let {
+                    Log.d("Home" , it.file[0].file_PATH)
+                    return NetworkResult.Success(baseUrl + it.file[0].file_PATH) }
+            }
+            return NetworkResult.Error(response.code(), response.message())
+
+        } catch (e: Throwable) {
+            return NetworkResult.Exception(e)
+        }
+    }
+
+
+    override suspend fun getRecommendTittle(value: String): NetworkResult<String> {
+        val response = starbucksApi.getRecommendTittle(value.toLong())
+        val body = response.body()
+        try {
+            if (response.isSuccessful) {
+                body?.let {it.view?.let {
+                    Log.d("Home",it.product_NM)
+                    return NetworkResult.Success(it.product_NM)   } }
+            }
+            return NetworkResult.Error(response.code(), response.message())
+        } catch (e: Throwable) {
+            return NetworkResult.Exception(e)
         }
     }
 

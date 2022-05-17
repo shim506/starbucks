@@ -1,12 +1,11 @@
 package com.example.starbucks.ui
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,9 +29,19 @@ class HomeFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
         setRecyclerviewAdapter()
-        setRecyclerviewDummyData()
+        //setRecyclerviewDummyData()
+        updateRecyclerviewAdapter()
+
 
         return binding.root
+    }
+
+    private fun updateRecyclerviewAdapter() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.recommendFlow.collect {
+                adapter.submitList(it)
+            }
+        }
     }
 
     private fun setRecyclerviewDummyData() {
@@ -66,16 +75,13 @@ class HomeFragment : Fragment() {
             viewModel.homeInfo.collect {
                 when (it) {
                     is NetworkResult.Success -> {
-                        viewModel.getRecommends()
+                        viewModel.getRecommends(it.data.yourRecommend.products)
                     }
                     is NetworkResult.Exception -> LogCollector().dealException(it.e)
                     is NetworkResult.Error -> LogCollector().dealError(it.message, it.code)
                 }
-
             }
-            //adapter.submitList(it)
         }
-
     }
 
 

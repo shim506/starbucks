@@ -9,4 +9,7 @@ interface Repository {
     suspend fun getRecommends(): Flow<NetworkResult<Product>>
 
     suspend fun getHomeInfo(): Flow<NetworkResult<HomeInfoDto>>
+
+    suspend fun getRecommendImage(value: String): NetworkResult<String>
+    suspend fun getRecommendTittle(value: String): NetworkResult<String>
 }

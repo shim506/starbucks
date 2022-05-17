@@ -1,15 +1,14 @@
 package com.example.starbucks.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.starbucks.LogCollector
 import com.example.starbucks.data.model.Product
 import com.example.starbucks.data.repository.RemoteDataSource
 import com.example.starbucks.network.MainApi
 import com.example.starbucks.network.NetworkResult
 import com.example.starbucks.network.StarbucksApi
 import com.example.starbucks.network.dto.HomeInfoDto
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
@@ -32,9 +31,32 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    fun getRecommends() {
+    fun getRecommends(recommendIndexList: List<String>) {
         viewModelScope.launch {
-            //Log.d()
+            val imageList =
+                MutableList<String?>(recommendIndexList.size) { null }
+            val titleList =
+                MutableList<String?>(recommendIndexList.size) { null }
+
+            launch(Dispatchers.IO) {
+                recommendIndexList.forEachIndexed { idx, value ->
+                    val responseImage = repo.getRecommendImage(value)
+                    val responseTitle = repo.getRecommendTittle(value)
+
+                    if (responseImage is NetworkResult.Success) imageList[idx] = responseImage.data
+                    if (responseTitle is NetworkResult.Success) {
+                        titleList[idx] = responseTitle.data
+                    }
+                }
+            }.join()
+
+            val resultList = mutableListOf<Product>()
+            recommendIndexList.forEachIndexed { idx, _ ->
+                if (imageList[idx] != null && titleList[idx] != null) {
+                    resultList.add(Product(titleList[idx]!!, imageList[idx]!!))
+                }
+            }
+            _recommendFlow.value = resultList
         }
 
     }
