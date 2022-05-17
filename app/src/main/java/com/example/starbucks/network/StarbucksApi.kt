@@ -4,12 +4,17 @@ import com.example.starbucks.network.dto.ProductFileInfoDto
 import com.example.starbucks.network.dto.ProductViewInfoDto
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import org.koin.dsl.module
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
+
+val starbucksNetworkModule = module {
+    single { StarbucksApi.create() }
+}
 
 interface StarbucksApi {
     @FormUrlEncoded
