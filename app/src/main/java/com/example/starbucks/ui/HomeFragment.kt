@@ -1,6 +1,7 @@
 package com.example.starbucks.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +10,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.starbucks.LogCollector
 import com.example.starbucks.R
 import com.example.starbucks.data.model.Product
 import com.example.starbucks.databinding.FragmentHomeBinding
+import com.example.starbucks.network.NetworkResult
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -28,8 +31,6 @@ class HomeFragment : Fragment() {
 
         setRecyclerviewAdapter()
         setRecyclerviewDummyData()
-
-
 
         return binding.root
     }
@@ -62,9 +63,17 @@ class HomeFragment : Fragment() {
         binding.recyclerviewRecommend.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.recommendFlow.collect {
-                adapter.submitList(it)
+            viewModel.homeInfo.collect {
+                when (it) {
+                    is NetworkResult.Success -> {
+                        viewModel.getRecommends()
+                    }
+                    is NetworkResult.Exception -> LogCollector().dealException(it.e)
+                    is NetworkResult.Error -> LogCollector().dealError(it.message, it.code)
+                }
+
             }
+            //adapter.submitList(it)
         }
 
     }
