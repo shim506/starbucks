@@ -10,6 +10,7 @@ import com.example.starbucks.network.StarbucksApi
 import com.example.starbucks.network.dto.HomeInfoDto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -38,28 +39,32 @@ class HomeViewModel : ViewModel() {
             val titleList =
                 MutableList<String?>(recommendIndexList.size) { null }
 
-            launch(Dispatchers.IO) {
-                recommendIndexList.forEachIndexed { idx, value ->
-                    val responseImage = repo.getRecommendImage(value)
-                    val responseTitle = repo.getRecommendTittle(value)
-
-                    if (responseImage is NetworkResult.Success) imageList[idx] = responseImage.data
-                    if (responseTitle is NetworkResult.Success) {
-                        titleList[idx] = responseTitle.data
+            recommendIndexList.forEachIndexed { idx, value ->
+                launch(Dispatchers.IO) {
+                    launch() {
+                        val responseImage = repo.getRecommendImage(value)
+                        if (responseImage is NetworkResult.Success) imageList[idx] =
+                            responseImage.data
                     }
-                }
-            }.join()
-
+                    launch {
+                        val responseTitle = repo.getRecommendTittle(value)
+                        if (responseTitle is NetworkResult.Success) {
+                            titleList[idx] = responseTitle.data
+                        }
+                    }
+                }.join()
+            }
             val resultList = mutableListOf<Product>()
             recommendIndexList.forEachIndexed { idx, _ ->
                 if (imageList[idx] != null && titleList[idx] != null) {
                     resultList.add(Product(titleList[idx]!!, imageList[idx]!!))
+                    _recommendFlow.value = resultList
                 }
+
             }
-            _recommendFlow.value = resultList
+
         }
 
     }
-
 }
 

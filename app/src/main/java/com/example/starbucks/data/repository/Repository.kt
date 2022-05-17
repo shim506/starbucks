@@ -12,4 +12,6 @@ interface Repository {
 
     suspend fun getRecommendImage(value: String): NetworkResult<String>
     suspend fun getRecommendTittle(value: String): NetworkResult<String>
+
+
 }
