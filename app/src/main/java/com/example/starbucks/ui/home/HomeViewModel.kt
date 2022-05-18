@@ -62,11 +62,8 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
                     resultList.add(Product(titleList[idx]!!, imageList[idx]!!))
                     _recommendFlow.value = resultList
                 }
-
             }
-
         }
-
     }
 }
 

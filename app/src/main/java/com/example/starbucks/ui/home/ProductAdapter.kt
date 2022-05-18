@@ -1,5 +1,6 @@
-package com.example.starbucks.ui
+package com.example.starbucks.ui.home
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil

@@ -12,7 +12,7 @@ val localRepositoryModule = module {
 }
 
 class LocalRepository(api: StarbucksApi) {
-    suspend fun getFoodMenu(): NetworkResult<List<Menu>> {
+    suspend fun getDrinkMenu(): NetworkResult<List<Menu>> {
         val list = listOf<Menu>(
             Menu("콜드브루", "upload/json/menu/W0000171.js"),
             Menu("에스프레소", "upload/json/menu/W0000003.js"),
@@ -21,7 +21,7 @@ class LocalRepository(api: StarbucksApi) {
         return NetworkResult.Success(list)
     }
 
-    suspend fun getDrinkMenu(): NetworkResult<List<Menu>> {
+    suspend fun getFoodMenu(): NetworkResult<List<Menu>> {
         val list = listOf<Menu>(
             Menu("브레드", "upload/json/menu/W0000013.js"),
             Menu("케이크", "upload/json/menu/W0000032.js"),

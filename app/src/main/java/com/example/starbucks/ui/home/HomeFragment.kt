@@ -16,7 +16,6 @@ import com.example.starbucks.data.model.Product
 import com.example.starbucks.databinding.FragmentHomeBinding
 import com.example.starbucks.network.NetworkResult
 import com.example.starbucks.network.dto.HomeInfoDto
-import com.example.starbucks.ui.ProductAdapter
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
