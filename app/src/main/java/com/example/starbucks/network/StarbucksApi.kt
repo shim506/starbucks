@@ -1,5 +1,6 @@
 package com.example.starbucks.network
 
+import com.example.starbucks.network.dto.MenuDto
 import com.example.starbucks.network.dto.ProductFileInfoDto
 import com.example.starbucks.network.dto.ProductViewInfoDto
 import com.squareup.moshi.Moshi
@@ -30,6 +31,9 @@ interface StarbucksApi {
         @Field("PRODUCT_CD") productIdx: Long
     ): Response<ProductFileInfoDto>
 
+
+    @POST("www.starbucks.co.kr/upload/json/menu/W0000171.js")
+    suspend fun getMenuColdBrew(): Response<MenuDto>
 
     companion object {
         const val baseUrl = "https://www.starbucks.co.kr/"

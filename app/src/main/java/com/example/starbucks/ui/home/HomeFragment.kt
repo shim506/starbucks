@@ -1,4 +1,4 @@
-package com.example.starbucks.ui
+package com.example.starbucks.ui.home
 
 import android.os.Bundle
 import android.util.Log
@@ -7,22 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
-import coil.size.Scale
-import coil.transform.CircleCropTransformation
-import com.example.starbucks.LogCollector
+import com.example.starbucks.common.LogCollector
 import com.example.starbucks.R
 import com.example.starbucks.data.model.Product
 import com.example.starbucks.databinding.FragmentHomeBinding
 import com.example.starbucks.network.NetworkResult
 import com.example.starbucks.network.dto.HomeInfoDto
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.example.starbucks.ui.ProductAdapter
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {

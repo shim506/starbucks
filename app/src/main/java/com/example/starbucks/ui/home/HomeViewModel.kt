@@ -1,13 +1,10 @@
-package com.example.starbucks.ui
+package com.example.starbucks.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.starbucks.data.model.Product
-import com.example.starbucks.data.repository.RemoteDataSource
 import com.example.starbucks.data.repository.Repository
-import com.example.starbucks.network.MainApi
 import com.example.starbucks.network.NetworkResult
-import com.example.starbucks.network.StarbucksApi
 import com.example.starbucks.network.dto.HomeInfoDto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,12 +14,11 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val homeViewModelModule = module{
-        viewModel { HomeViewModel(get()) }
+val homeViewModelModule = module {
+    viewModel { HomeViewModel(get()) }
 }
 
-class HomeViewModel(private val repo : Repository) : ViewModel() {
-   /// private val repo = RemoteDataSource(MainApi.createMainApi(), StarbucksApi.create())
+class HomeViewModel(private val repository: Repository) : ViewModel() {
 
     private val _recommendFlow = MutableStateFlow<List<Product>?>(null)
     val recommendFlow: StateFlow<List<Product>?> = _recommendFlow
@@ -32,7 +28,7 @@ class HomeViewModel(private val repo : Repository) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            repo.getHomeInfo().collect {
+            repository.getHomeInfo().collect {
                 _homeInfo.value = it
             }
         }
@@ -48,12 +44,12 @@ class HomeViewModel(private val repo : Repository) : ViewModel() {
             recommendIndexList.forEachIndexed { idx, value ->
                 launch(Dispatchers.IO) {
                     launch() {
-                        val responseImage = repo.getRecommendImage(value)
+                        val responseImage = repository.getRecommendImage(value)
                         if (responseImage is NetworkResult.Success) imageList[idx] =
                             responseImage.data
                     }
                     launch {
-                        val responseTitle = repo.getRecommendTittle(value)
+                        val responseTitle = repository.getRecommendTittle(value)
                         if (responseTitle is NetworkResult.Success) {
                             titleList[idx] = responseTitle.data
                         }

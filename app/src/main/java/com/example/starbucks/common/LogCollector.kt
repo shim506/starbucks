@@ -1,4 +1,4 @@
-package com.example.starbucks
+package com.example.starbucks.common
 
 class LogCollector {
     fun dealException(e: Throwable) {}
