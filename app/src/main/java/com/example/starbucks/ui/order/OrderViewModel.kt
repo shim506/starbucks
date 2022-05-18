@@ -8,6 +8,7 @@ import com.example.starbucks.data.repository.Repository
 import com.example.starbucks.network.NetworkResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -19,13 +20,13 @@ val orderViewModelModule = module {
 
 class OrderViewModel(private val repository: Repository, private val localRepo: LocalRepository) :
     ViewModel() {
-    private val _menuSelected = MutableStateFlow<ISelectedMenu>(DrinkMenuSelected(localRepo))
-    val menuSelected: StateFlow<ISelectedMenu> = _menuSelected
+    private val _menuSelected =
+        MutableStateFlow<ISelectedMenu>(DrinkMenuSelected(localRepo))
+    val menuSelected = _menuSelected.debounce { 500 }
 
     private val _menuList = MutableStateFlow<NetworkResult<List<Menu>>>(NetworkResult.Loading())
     val menuList: StateFlow<NetworkResult<List<Menu>>> = _menuList
-
-
+    
     init {
         getMenu(DrinkMenuSelected(localRepo))
     }
