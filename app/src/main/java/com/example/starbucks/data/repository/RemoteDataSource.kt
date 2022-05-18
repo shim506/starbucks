@@ -1,7 +1,6 @@
 package com.example.starbucks.data.repository
 
 import android.util.Log
-import com.example.starbucks.data.model.Product
 import com.example.starbucks.network.MainApi
 import com.example.starbucks.network.NetworkResult
 import com.example.starbucks.network.StarbucksApi
@@ -33,12 +32,13 @@ class RemoteDataSource(private val mainApi: MainApi, private val starbucksApi: S
     override suspend fun getRecommendImage(value: String): NetworkResult<String> {
         val response = starbucksApi.getRecommendImage(value.toLong())
         val body = response.body()
-        Log.d("Home" , response.isSuccessful.toString())
+        Log.d("Home", response.isSuccessful.toString())
         try {
             if (response.isSuccessful) {
                 body?.let {
-                    Log.d("Home" , it.file[0].file_PATH)
-                    return NetworkResult.Success(baseUrl + it.file[0].file_PATH) }
+                    Log.d("Home", it.file[0].file_PATH)
+                    return NetworkResult.Success(baseUrl + it.file[0].file_PATH)
+                }
             }
             return NetworkResult.Error(response.code(), response.message())
 
@@ -53,14 +53,17 @@ class RemoteDataSource(private val mainApi: MainApi, private val starbucksApi: S
         val body = response.body()
         try {
             if (response.isSuccessful) {
-                body?.let {it.view?.let {
-                    Log.d("Home",it.product_NM)
-                    return NetworkResult.Success(it.product_NM)   } }
+                body?.let {
+                    it.view?.let {
+                        return NetworkResult.Success(it.product_NM)
+                    }
+                }
             }
             return NetworkResult.Error(response.code(), response.message())
         } catch (e: Throwable) {
             return NetworkResult.Exception(e)
         }
     }
+
 
 }

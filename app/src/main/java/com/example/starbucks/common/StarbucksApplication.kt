@@ -1,6 +1,7 @@
 package com.example.starbucks.common
 
 import android.app.Application
+import com.example.starbucks.data.repository.localRepositoryModule
 import com.example.starbucks.data.repository.repositoryModule
 import com.example.starbucks.network.mainNetworkModule
 import com.example.starbucks.network.starbucksNetworkModule
@@ -15,8 +16,12 @@ class StarbucksApplication : Application() {
         startKoin {
             androidContext(this@StarbucksApplication)
             modules(
-                homeViewModelModule, mainNetworkModule,
-                starbucksNetworkModule, repositoryModule, orderViewModelModule
+                homeViewModelModule,
+                mainNetworkModule,
+                starbucksNetworkModule,
+                repositoryModule,
+                orderViewModelModule,
+                localRepositoryModule
             )
         }
     }
