@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.example.starbucks.ui.order.OrderViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +28,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
-            android:onClick="@{() -> }"
             android:id="@+id/view3"
             android:layout_width="match_parent"
             android:layout_height="2dp"
@@ -37,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:onClick="@{() -> viewModel.drinkSelected()}"
             android:text="@string/drink"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view3" />
@@ -46,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:onClick="@{() -> viewModel.foodSelected()}"
             android:text="@string/food"
             app:layout_constraintStart_toEndOf="@+id/button_menu_drink"
             app:layout_constraintTop_toBottomOf="@id/view3" />
@@ -55,6 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:onClick="@{() -> viewModel.productSelected()}"
             android:text="@string/product"
             app:layout_constraintStart_toEndOf="@id/button_menu_food"
             app:layout_constraintTop_toBottomOf="@id/view3" />

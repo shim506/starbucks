@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
-import com.example.starbucks.common.LogCollector
 import com.example.starbucks.R
+import com.example.starbucks.common.LogCollector
 import com.example.starbucks.data.model.Product
 import com.example.starbucks.databinding.FragmentHomeBinding
 import com.example.starbucks.network.NetworkResult
