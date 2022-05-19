@@ -1,6 +1,5 @@
 package com.example.starbucks.data.repository
 
-import android.util.Log
 import com.example.starbucks.network.MainApi
 import com.example.starbucks.network.NetworkResult
 import com.example.starbucks.network.StarbucksApi

@@ -5,6 +5,7 @@ import com.example.starbucks.data.repository.localRepositoryModule
 import com.example.starbucks.data.repository.repositoryModule
 import com.example.starbucks.network.mainNetworkModule
 import com.example.starbucks.network.starbucksNetworkModule
+import com.example.starbucks.ui.detail.detailViewModelModule
 import com.example.starbucks.ui.home.homeViewModelModule
 import com.example.starbucks.ui.order.orderViewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -21,7 +22,8 @@ class StarbucksApplication : Application() {
                 starbucksNetworkModule,
                 repositoryModule,
                 orderViewModelModule,
-                localRepositoryModule
+                localRepositoryModule,
+                detailViewModelModule
             )
         }
     }

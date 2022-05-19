@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.detail.DetailFragment">
+        tools:context=".ui.detail.MenuDetailFragment">
 
         <ImageButton
             android:id="@+id/image_button_back"
