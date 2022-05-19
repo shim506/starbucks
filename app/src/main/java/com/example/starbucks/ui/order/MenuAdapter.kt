@@ -3,6 +3,8 @@ package com.example.starbucks.ui.order
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +15,8 @@ import com.example.starbucks.data.model.Menu
 import com.example.starbucks.databinding.MenuItemBinding
 
 
-class MenuAdapter : ListAdapter<Menu, MenuViewHolder>(diffUtil) {
+class MenuAdapter(private val navigation: NavigationListener) :
+    ListAdapter<Menu, MenuViewHolder>(diffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
         val binding: MenuItemBinding =
             DataBindingUtil.inflate(
@@ -22,9 +25,8 @@ class MenuAdapter : ListAdapter<Menu, MenuViewHolder>(diffUtil) {
                 parent,
                 false
             )
-        return MenuViewHolder(binding)
+        return MenuViewHolder(binding, navigation)
     }
-
 
     override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
         holder.bind(getItem(position))
@@ -44,12 +46,16 @@ class MenuAdapter : ListAdapter<Menu, MenuViewHolder>(diffUtil) {
     }
 }
 
-class MenuViewHolder(val binding: MenuItemBinding) : RecyclerView.ViewHolder(binding.root) {
+class MenuViewHolder(val binding: MenuItemBinding, private val navigation: NavigationListener) :
+    RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Menu) {
         binding.menuItemTitle.text = item.title
         binding.menuItemSubTitle.text = item.subTitle
         binding.imageviewMenuItem.load(item.image) {
             transformations(CircleCropTransformation())
+        }
+        binding.root.setOnClickListener {
+           navigation.moveNavigation(item.url  , item.title)
         }
 
     }

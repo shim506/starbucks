@@ -24,7 +24,6 @@ class RemoteDataSource(private val mainApi: MainApi, private val starbucksApi: S
                 flow { emit(NetworkResult.Error(response.code(), response.message())) }
             }
         } catch (e: Exception) {
-            Log.d("TAG", e.toString())
             flow { emit(NetworkResult.Exception(e)) }
         }
     }
@@ -32,11 +31,9 @@ class RemoteDataSource(private val mainApi: MainApi, private val starbucksApi: S
     override suspend fun getRecommendImage(value: String): NetworkResult<String> {
         val response = starbucksApi.getRecommendImage(value.toLong())
         val body = response.body()
-        Log.d("Home", response.isSuccessful.toString())
         try {
             if (response.isSuccessful) {
                 body?.let {
-                    Log.d("Home", it.file[0].file_PATH)
                     return NetworkResult.Success(baseUrl + it.file[0].file_PATH)
                 }
             }

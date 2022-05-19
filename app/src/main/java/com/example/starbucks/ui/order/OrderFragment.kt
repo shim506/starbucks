@@ -2,13 +2,14 @@ package com.example.starbucks.ui.order
 
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.starbucks.R
 import com.example.starbucks.databinding.FragmentOrderBinding
@@ -17,11 +18,14 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+interface NavigationListener {
+    fun moveNavigation(url: String, title: String)
+}
 
 class OrderFragment : Fragment() {
 
     lateinit var binding: FragmentOrderBinding
-    private val adapter = MenuAdapter()
+    private lateinit var adapter: MenuAdapter
     private val viewModel: OrderViewModel by viewModel()
 
     override fun onCreateView(
@@ -63,6 +67,13 @@ class OrderFragment : Fragment() {
     }
 
     private fun setRecyclerviewAdapter() {
+        adapter = MenuAdapter(object : NavigationListener {
+            override fun moveNavigation(url: String, title: String) {
+                val action =
+                    OrderFragmentDirections.actionOrderFragmentToDetailFragment(url, title)
+                findNavController().navigate(action)
+            }
+        })
         binding.viewModel = viewModel
         binding.recyclerviewMenu.adapter = adapter
         binding.recyclerviewMenu.layoutManager =

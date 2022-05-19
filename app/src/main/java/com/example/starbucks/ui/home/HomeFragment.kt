@@ -44,7 +44,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun setMainEvent(homeInfo: HomeInfoDto) {
-        Log.d("Homex","${homeInfo.mainEvent.img_UPLOAD_PATH + homeInfo.mainEvent.mob_THUM}")
         binding.imageviewMainEvent.load(homeInfo.mainEvent.img_UPLOAD_PATH + homeInfo.mainEvent.mob_THUM)
     }
 
