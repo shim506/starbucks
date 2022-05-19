@@ -20,22 +20,27 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:layout_marginLeft="5dp"
             android:id="@+id/menu_item_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
             android:text="@string/tempString"
-            android:textSize="21dp"
+            android:textColor="@color/darkGrey"
+            android:textSize="21sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/menu_item_sub_title"
             app:layout_constraintStart_toEndOf="@id/imageview_menu_item"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
+            android:id="@+id/menu_item_sub_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:text="@string/tempString"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/imageview_menu_item"
             app:layout_constraintTop_toBottomOf="@id/menu_item_title" />
 

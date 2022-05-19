@@ -47,8 +47,10 @@ class MenuAdapter : ListAdapter<Menu, MenuViewHolder>(diffUtil) {
 class MenuViewHolder(val binding: MenuItemBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Menu) {
         binding.menuItemTitle.text = item.title
+        binding.menuItemSubTitle.text = item.subTitle
         binding.imageviewMenuItem.load(item.image) {
             transformations(CircleCropTransformation())
         }
+
     }
 }

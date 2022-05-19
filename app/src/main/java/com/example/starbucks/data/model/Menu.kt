@@ -3,7 +3,8 @@ package com.example.starbucks.data.model
 data class Menu(
     val title: String,
     val url: String,
-    val image: String = tempImageUrl
+    val image: String = tempImageUrl,
+    val subTitle: String = ""
 ) {
     companion object {
         const val tempImageUrl =
