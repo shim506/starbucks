@@ -10,27 +10,27 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.detail.DetailFragment">
+        tools:context=".ui.SecondActivity">
 
-        <TextView
-            android:id="@+id/textview_detail_name"
-            style="@style/head1"
+        <Button
+            android:id="@+id/button_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="@string/hello_blank_fragment"
+            android:text="로그인"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button_order"
+            android:id="@+id/button_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="주문하기"
+            android:text="로그인"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/button_login" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
