@@ -9,7 +9,10 @@ import org.koin.dsl.module
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.*
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
+import retrofit2.http.Path
 
 val starbucksNetworkModule = module {
     single { StarbucksApi.create() }

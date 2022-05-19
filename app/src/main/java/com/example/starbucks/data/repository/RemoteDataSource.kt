@@ -1,13 +1,11 @@
 package com.example.starbucks.data.repository
 
-import android.util.Log
 import com.example.starbucks.data.model.Menu
 import com.example.starbucks.network.MainApi
 import com.example.starbucks.network.NetworkResult
 import com.example.starbucks.network.StarbucksApi
 import com.example.starbucks.network.StarbucksApi.Companion.baseUrl
 import com.example.starbucks.network.dto.HomeInfoDto
-import com.example.starbucks.network.dto.MenuDto
 import com.example.starbucks.network.dto.menuItemDtoToMenuDetail
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

@@ -1,7 +1,6 @@
 package com.example.starbucks.ui.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +10,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.starbucks.R
 import com.example.starbucks.databinding.FragmentDetailBinding
 import com.example.starbucks.network.NetworkResult
 import com.example.starbucks.ui.order.MenuAdapter
 import com.example.starbucks.ui.order.NavigationListener
-import com.example.starbucks.ui.order.OrderFragmentDirections
-import com.example.starbucks.ui.order.OrderViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -27,6 +23,7 @@ class MenuDetailFragment : Fragment() {
     lateinit var binding: FragmentDetailBinding
     private val viewModel: MenuDetailViewModel by viewModel()
     lateinit var adapter: MenuAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,7 +35,7 @@ class MenuDetailFragment : Fragment() {
 
         adapter = MenuAdapter(object : NavigationListener {
             override fun moveNavigation(url: String, title: String) {
-                val action = MenuDetailFragmentDirections.actionDetailFragmentToDetailFragment3(url)
+                val action = MenuDetailFragmentDirections.actionDetailFragmentToDetailFragment3(url,title)
                 findNavController().navigate(action)
             }
         })

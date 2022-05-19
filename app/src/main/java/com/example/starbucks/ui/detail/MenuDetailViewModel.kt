@@ -1,12 +1,10 @@
 package com.example.starbucks.ui.detail
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.starbucks.data.model.Menu
 import com.example.starbucks.data.repository.Repository
 import com.example.starbucks.network.NetworkResult
-import com.example.starbucks.network.dto.MenuDto
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

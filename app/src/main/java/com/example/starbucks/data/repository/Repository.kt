@@ -3,7 +3,6 @@ package com.example.starbucks.data.repository
 import com.example.starbucks.data.model.Menu
 import com.example.starbucks.network.NetworkResult
 import com.example.starbucks.network.dto.HomeInfoDto
-import com.example.starbucks.network.dto.MenuDto
 import kotlinx.coroutines.flow.Flow
 import org.koin.dsl.module
 

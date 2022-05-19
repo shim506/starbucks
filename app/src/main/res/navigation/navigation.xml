@@ -27,10 +27,10 @@
         tools:layout="@layout/fragment_order" >
         <action
             android:id="@+id/action_orderFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            app:destination="@id/menuDetailFragment" />
     </fragment>
     <fragment
-        android:id="@+id/detailFragment"
+        android:id="@+id/menuDetailFragment"
         android:name="com.example.starbucks.ui.detail.MenuDetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" >
@@ -45,15 +45,18 @@
             app:destination="@id/orderFragment" />
         <action
             android:id="@+id/action_detailFragment_to_detailFragment3"
-            app:destination="@id/detailFragment3" />
+            app:destination="@id/detailFragment" />
     </fragment>
     <fragment
-        android:id="@+id/detailFragment3"
-        android:name="com.example.starbucks.ui.DetailFragment"
-        android:label="fragment_detail2"
-        tools:layout="@layout/fragment_detail2" >
+        android:id="@+id/detailFragment"
+        android:name="com.example.starbucks.ui.detail.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail2">
         <argument
             android:name="url"
+            app:argType="string" />
+        <argument
+            android:name="title"
             app:argType="string" />
     </fragment>
 
