@@ -2,4 +2,10 @@
     <string name="app_name">Starbucks</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="what_s_news">What\'s news</string>
+    <string name="order">order</string>
+    <string name="tempString">tempString</string>
+    <string name="drink">음료</string>
+    <string name="food">음식</string>
+    <string name="product">상품</string>
 </resources>
