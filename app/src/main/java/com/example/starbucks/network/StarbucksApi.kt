@@ -9,9 +9,7 @@ import org.koin.dsl.module
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 val starbucksNetworkModule = module {
     single { StarbucksApi.create() }
@@ -32,8 +30,11 @@ interface StarbucksApi {
     ): Response<ProductFileInfoDto>
 
 
-    @POST("www.starbucks.co.kr/upload/json/menu/W0000171.js")
+    @POST("https://www.starbucks.co.kr/upload/json/menu/W0000171.js")
     suspend fun getMenuColdBrew(): Response<MenuDto>
+
+    @POST("upload/json/menu/{menuPath}")
+    suspend fun getMenuDetail(@Path("menuPath") url: String): Response<MenuDto>
 
     companion object {
         const val baseUrl = "https://www.starbucks.co.kr/"

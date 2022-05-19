@@ -1,5 +1,8 @@
 package com.example.starbucks.network.dto
 
+import android.util.Log
+import com.example.starbucks.data.model.Menu
+
 data class MenuDto(
     val list: List<MenuItemsDto>
 )
@@ -71,25 +74,25 @@ data class MenuItemsDto(
     val rnum: Int,
     val sat_FAT: String,
     val sat_FAT_L: String,
-    val search_1_CATE: Any,
-    val search_2_CATE: Any,
-    val search_3_CATE: Any,
-    val search_DATE_TYPE: Any,
-    val search_END_DATE: Any,
-    val search_KEY: String,
-    val search_SALE_TYPE: Any,
-    val search_START_DATE: Any,
-    val search_VALUE: Any,
-    val search_VIEW_YN: Any,
-    val sell_CAT: String,
-    val sodium: String,
-    val sodium_L: String,
+    val search_1_CATE: Any?,
+    val search_2_CATE: Any?,
+    val search_3_CATE: Any?,
+    val search_DATE_TYPE: Any?,
+    val search_END_DATE: Any?,
+    val search_KEY: String?,
+    val search_SALE_TYPE: Any?,
+    val search_START_DATE: Any?,
+    val search_VALUE: Any?,
+    val search_VIEW_YN: Any?,
+    val sell_CAT: String?,
+    val sodium: String?,
+    val sodium_L: String?,
     val sold_OUT: String,
     val standard: String,
     val sub_VIEW: String,
     val sugars: String,
     val sugars_L: String,
-    val theme_SEARCH: String,
+    val theme_SEARCH: String?,
     val thumbnail: String,
     val total_CNT: Int,
     val trans_FAT: String,
@@ -105,3 +108,8 @@ data class MenuItemsDto(
     val web_NEW: String,
     val youtube_CODE: String
 )
+
+fun MenuItemsDto.menuItemDtoToMenuDetail(): Menu.MenuDetail {
+    Log.d("dd", "img_UPLOAD_PATH + file_PATH")
+    return Menu.MenuDetail(product_NM, img_UPLOAD_PATH + file_PATH, product_CD, 6000)
+}

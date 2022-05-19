@@ -12,10 +12,12 @@ import com.example.starbucks.R
 import com.example.starbucks.data.model.Menu
 import com.example.starbucks.databinding.MenuItemBinding
 
+private const val VIEW_TYPE_DETAIL_MENU = 1
+private const val VIEW_TYPE_CATEGORY_MENU = 2
 
-class MenuAdapter(private val navigation: NavigationListener) :
-    ListAdapter<Menu, MenuViewHolder>(diffUtil) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
+class MenuAdapter(private val navigation: NavigationListener? = null) :
+    ListAdapter<Menu, RecyclerView.ViewHolder>(diffUtil) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding: MenuItemBinding =
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
@@ -23,37 +25,77 @@ class MenuAdapter(private val navigation: NavigationListener) :
                 parent,
                 false
             )
-        return MenuViewHolder(binding, navigation)
+        return if (viewType == VIEW_TYPE_DETAIL_MENU) MenuDetailViewHolder(binding)
+        else MenuCategoryViewHolder(binding, navigation)
     }
 
-    override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
-        holder.bind(getItem(position))
+    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
+        if (viewHolder is MenuDetailViewHolder) {
+            viewHolder.bind(getItem(position) as Menu.MenuDetail)
+        } else if (viewHolder is MenuCategoryViewHolder) {
+            viewHolder.bind(getItem(position) as Menu.MenuCategory)
+        }
+
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (getItem(position)) {
+            is Menu.MenuDetail -> VIEW_TYPE_DETAIL_MENU
+            is Menu.MenuCategory -> VIEW_TYPE_CATEGORY_MENU
+            else -> 0
+        }
     }
 
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<Menu>() {
             override fun areItemsTheSame(oldItem: Menu, newItem: Menu): Boolean {
-                return oldItem.title == newItem.title
+                return when (oldItem) {
+                    is Menu.MenuDetail -> oldItem.title == (newItem as? Menu.MenuDetail)?.title ?: false
+
+                    is Menu.MenuCategory -> {
+                        oldItem.title == (newItem as? Menu.MenuCategory)?.title ?: false
+                    }
+                }
             }
 
             override fun areContentsTheSame(oldItem: Menu, newItem: Menu): Boolean {
                 return oldItem == newItem
             }
+        }
+    }
 
+
+}
+
+
+class MenuDetailViewHolder(
+    val binding: MenuItemBinding, private val navigation: NavigationListener? = null
+) :
+    RecyclerView.ViewHolder(binding.root) {
+    fun bind(item: Menu.MenuDetail) {
+        binding.menuItemTitle.text = item.title
+        binding.imageviewMenuItem.load(item.image) {
+            transformations(CircleCropTransformation())
+        }
+        binding.root.setOnClickListener {
+            //navigation?.moveNavigation(item.url, item.title)
         }
     }
 }
 
-class MenuViewHolder(val binding: MenuItemBinding, private val navigation: NavigationListener) :
+class MenuCategoryViewHolder(
+    val binding: MenuItemBinding,
+    private val navigation: NavigationListener? = null
+) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(item: Menu) {
+    fun bind(item: Menu.MenuCategory) {
         binding.menuItemTitle.text = item.title
         binding.menuItemSubTitle.text = item.subTitle
         binding.imageviewMenuItem.load(item.image) {
             transformations(CircleCropTransformation())
         }
         binding.root.setOnClickListener {
-           navigation.moveNavigation(item.url  , item.title)
+            navigation?.moveNavigation(item.url, item.title)
         }
 
     }
