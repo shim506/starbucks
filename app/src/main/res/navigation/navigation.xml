@@ -43,6 +43,18 @@
         <action
             android:id="@+id/action_detailFragment_to_orderFragment"
             app:destination="@id/orderFragment" />
+        <action
+            android:id="@+id/action_detailFragment_to_detailFragment3"
+            app:destination="@id/detailFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment3"
+        android:name="com.example.starbucks.ui.DetailFragment"
+        android:label="fragment_detail2"
+        tools:layout="@layout/fragment_detail2" >
+        <argument
+            android:name="url"
+            app:argType="string" />
     </fragment>
 
 

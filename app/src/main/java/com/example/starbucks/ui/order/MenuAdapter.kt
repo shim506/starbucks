@@ -25,7 +25,7 @@ class MenuAdapter(private val navigation: NavigationListener? = null) :
                 parent,
                 false
             )
-        return if (viewType == VIEW_TYPE_DETAIL_MENU) MenuDetailViewHolder(binding)
+        return if (viewType == VIEW_TYPE_DETAIL_MENU) MenuDetailViewHolder(binding , navigation)
         else MenuCategoryViewHolder(binding, navigation)
     }
 
@@ -78,7 +78,7 @@ class MenuDetailViewHolder(
             transformations(CircleCropTransformation())
         }
         binding.root.setOnClickListener {
-            //navigation?.moveNavigation(item.url, item.title)
+            navigation?.moveNavigation(item.url, item.title)
         }
     }
 }

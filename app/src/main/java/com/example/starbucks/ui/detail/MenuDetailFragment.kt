@@ -16,6 +16,8 @@ import com.example.starbucks.R
 import com.example.starbucks.databinding.FragmentDetailBinding
 import com.example.starbucks.network.NetworkResult
 import com.example.starbucks.ui.order.MenuAdapter
+import com.example.starbucks.ui.order.NavigationListener
+import com.example.starbucks.ui.order.OrderFragmentDirections
 import com.example.starbucks.ui.order.OrderViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -24,7 +26,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MenuDetailFragment : Fragment() {
     lateinit var binding: FragmentDetailBinding
     private val viewModel: MenuDetailViewModel by viewModel()
-    private val adapter = MenuAdapter()
+    lateinit var adapter: MenuAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,6 +36,12 @@ class MenuDetailFragment : Fragment() {
         val args: MenuDetailFragmentArgs by navArgs()
         binding.textviewCategory.text = args.categoryName
 
+        adapter = MenuAdapter(object : NavigationListener {
+            override fun moveNavigation(url: String, title: String) {
+                val action = MenuDetailFragmentDirections.actionDetailFragmentToDetailFragment3(url)
+                findNavController().navigate(action)
+            }
+        })
         binding.recyclerviewMenuDetail.adapter = adapter
         binding.recyclerviewMenuDetail.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
