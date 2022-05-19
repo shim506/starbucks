@@ -23,7 +23,8 @@
             android:layout_marginStart="10dp"
             android:text="@string/order"
             android:textColor="@color/black"
-            android:textSize="50dp"
+            android:textSize="40dp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,12 +37,15 @@
             app:layout_constraintTop_toBottomOf="@id/textview_order" />
 
         <Button
+            android:textStyle="bold"
             android:id="@+id/button_menu_drink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:onClick="@{() -> viewModel.drinkSelected()}"
+            android:background="#00000000"
             android:text="@string/drink"
+            android:textColor="@color/grey"
+            android:textSize="15dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view3" />
 
@@ -50,8 +54,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:onClick="@{() -> viewModel.foodSelected()}"
+            android:background="#00000000"
             android:text="@string/food"
+            android:textColor="@color/grey"
+            android:textSize="15dp"
             app:layout_constraintStart_toEndOf="@+id/button_menu_drink"
             app:layout_constraintTop_toBottomOf="@id/view3" />
 
@@ -60,8 +66,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:onClick="@{() -> viewModel.productSelected()}"
+            android:background="#00000000"
             android:text="@string/product"
+            android:textColor="@color/grey"
+            android:textSize="15dp"
             app:layout_constraintStart_toEndOf="@id/button_menu_food"
             app:layout_constraintTop_toBottomOf="@id/view3" />
 

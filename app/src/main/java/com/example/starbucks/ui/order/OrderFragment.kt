@@ -1,5 +1,6 @@
 package com.example.starbucks.ui.order
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,21 +23,58 @@ class OrderFragment : Fragment() {
     lateinit var binding: FragmentOrderBinding
     private val adapter = MenuAdapter()
     private val viewModel: OrderViewModel by viewModel()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order, container, false)
 
+        setRecyclerviewAdapter()
+        getMenuList()
+        updateMenu()
+        listenButtonSelect()
+
+        return binding.root
+    }
+
+    private fun listenButtonSelect() {
+        binding.buttonMenuDrink.setOnClickListener {
+            clearButtonGlowing()
+            binding.buttonMenuDrink.setTypeface(binding.buttonMenuDrink.typeface, Typeface.BOLD)
+            viewModel.drinkSelected()
+        }
+        binding.buttonMenuFood.setOnClickListener {
+            clearButtonGlowing()
+            binding.buttonMenuFood.setTypeface(binding.buttonMenuFood.typeface, Typeface.BOLD)
+            viewModel.foodSelected()
+        }
+        binding.buttonMenuProduct.setOnClickListener {
+            clearButtonGlowing()
+            binding.buttonMenuProduct.setTypeface(binding.buttonMenuProduct.typeface, Typeface.BOLD)
+            viewModel.productSelected()
+        }
+    }
+
+    private fun clearButtonGlowing() {
+        binding.buttonMenuFood.setTypeface(null, Typeface.NORMAL)
+        binding.buttonMenuProduct.setTypeface(null, Typeface.NORMAL)
+        binding.buttonMenuDrink.setTypeface(null, Typeface.NORMAL)
+    }
+
+    private fun setRecyclerviewAdapter() {
         binding.viewModel = viewModel
         binding.recyclerviewMenu.adapter = adapter
         binding.recyclerviewMenu.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+    }
 
-        getMenuList()
-        updateMenu()
-
-        return binding.root
+    private fun getMenuList() {
+        lifecycleScope.launch {
+            viewModel.menuSelected.collect {
+                viewModel.getMenu(it)
+            }
+        }
     }
 
     private fun updateMenu() {
@@ -45,14 +83,6 @@ class OrderFragment : Fragment() {
                 if (it is NetworkResult.Success) {
                     adapter.submitList(it.data)
                 }
-            }
-        }
-    }
-
-    private fun getMenuList() {
-        lifecycleScope.launch {
-            viewModel.menuSelected.collect {
-                val x = viewModel.getMenu(it)
             }
         }
     }

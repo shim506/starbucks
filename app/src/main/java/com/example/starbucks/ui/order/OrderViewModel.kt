@@ -26,7 +26,7 @@ class OrderViewModel(private val repository: Repository, private val localRepo: 
 
     private val _menuList = MutableStateFlow<NetworkResult<List<Menu>>>(NetworkResult.Loading())
     val menuList: StateFlow<NetworkResult<List<Menu>>> = _menuList
-    
+
     init {
         getMenu(DrinkMenuSelected(localRepo))
     }
