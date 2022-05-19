@@ -19,12 +19,16 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
+
         val args: DetailFragmentArgs by navArgs()
-        binding.
+        binding.textviewCategory.text = args.categoryName
+
+
+
+
 
 
         return binding.root
-
     }
 
 

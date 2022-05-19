@@ -4,7 +4,8 @@ data class Menu(
     val title: String,
     val url: String,
     val image: String = tempImageUrl,
-    val subTitle: String = ""
+    val subTitle: String = "",
+    val price: Int? = null
 ) {
     companion object {
         const val tempImageUrl =
